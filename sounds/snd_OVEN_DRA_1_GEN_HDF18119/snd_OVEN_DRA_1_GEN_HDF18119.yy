@@ -11,7 +11,7 @@
     "path": "audiogroups/audiogroup_default",
   },
   "soundFile": "snd_OVEN_DRA_1_GEN_HDF18119.wav",
-  "duration": 7.661281,
+  "duration": 7.656281,
   "parent": {
     "name": "Animatronic",
     "path": "folders/Sounds/Animatronic.yy",

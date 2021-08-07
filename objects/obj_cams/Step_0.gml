@@ -115,7 +115,7 @@ if (static_timer == 0) {
 	if (foxyAnimateRun == sprite_get_number(spr_foxy_run)-1) {
 		resetFoxy();
 		if !audio_is_playing(snd_knock2) {
-			audio_play_sound(snd_knock2, 0, false);	
+			var _index = audio_play_sound(snd_knock2, 0, false);	
 			audio_sound_gain(_index, game_settings.volume_animatronics, 0);
 		}
 	}

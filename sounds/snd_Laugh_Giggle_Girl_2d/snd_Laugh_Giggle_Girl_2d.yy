@@ -11,7 +11,7 @@
     "path": "audiogroups/audiogroup_default",
   },
   "soundFile": "snd_Laugh_Giggle_Girl_2d.wav",
-  "duration": 7.99144,
+  "duration": 7.98644,
   "parent": {
     "name": "Animatronic",
     "path": "folders/Sounds/Animatronic.yy",
