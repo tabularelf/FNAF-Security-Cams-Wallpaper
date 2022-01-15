@@ -3,6 +3,7 @@
   "glyphOperations": 0,
   "interpreter": 0,
   "pointRounding": 0,
+  "applyKerning": 0,
   "fontName": "VCR OSD Mono",
   "styleName": "Regular",
   "size": 14.0,
@@ -127,8 +128,8 @@
   "canGenerateBitmap": true,
   "maintainGms1Font": false,
   "parent": {
-    "name": "FNAF Security Cams",
-    "path": "FNAF Security Cams.yyp",
+    "name": "FNAF_Security_Cams",
+    "path": "FNAF_Security_Cams.yyp",
   },
   "resourceVersion": "1.0",
   "name": "fnt_text",

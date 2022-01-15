@@ -1,6 +1,8 @@
 if (os_browser != browser_not_a_browser) {
-	//gml_pragma("PNGCrush");
+	gml_pragma("PNGCrush");
 }
+
+#macro FNAF_VERSION "1.0.7"
 
 function image_speed_get(_sprite) {
   return sprite_get_speed_type(_sprite) == spritespeed_framespergameframe ? sprite_get_speed(_sprite) :   sprite_get_speed(_sprite)/game_get_speed(gamespeed_fps);

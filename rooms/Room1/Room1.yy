@@ -97,8 +97,8 @@
     "PhysicsWorldPixToMetres": 0.1,
   },
   "parent": {
-    "name": "FNAF Security Cams",
-    "path": "FNAF Security Cams.yyp",
+    "name": "FNAF_Security_Cams",
+    "path": "FNAF_Security_Cams.yyp",
   },
   "resourceVersion": "1.0",
   "name": "Room1",

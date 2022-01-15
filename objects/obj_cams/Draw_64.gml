@@ -9,6 +9,8 @@ Cat Judges your code
 var _mx = device_mouse_x_to_gui(0);
 var _my = device_mouse_y_to_gui(0);
 
+//draw_text(8,8, [mouse_check_button(mb_any), device_mouse_check_button(0, mb_any), _mx, _my]);
+
 // Render static
 draw_sprite_ext(spr_static,	current_time*image_speed_get(spr_static), 0, 0, 1, 1, 0, c_white, .15);
 
@@ -74,6 +76,7 @@ if (settingsUIEnabled) {
 	draw_sprite_ext(spr_arrow, 0, _sliderRightX, _sliderButtonY + (_sliderButtonYIncr*2), 1, 1, 0, c_white, 1);
 	
 	// UI Text
+	draw_text(456+8, 196+8, FNAF_VERSION);
 	draw_text(_sliderLeftX-160, _sliderButtonY, "Ambience");
 	draw_text(_sliderLeftX-160, _sliderButtonY + (_sliderButtonYIncr*1), "Animatronics");
 	draw_text(_sliderLeftX-160, _sliderButtonY + (_sliderButtonYIncr*2), "UI");

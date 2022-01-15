@@ -5,6 +5,7 @@
 -(((---(((--------
 Cat Judges your code
 */
+
 randomize();
 function moveAnimatronic(_animatronic) {
 			var _lastLocation = _animatronic.location;

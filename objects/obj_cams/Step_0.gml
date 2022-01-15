@@ -48,6 +48,10 @@ if !window_has_focus() {
 	}
 }*/
 
+/*if (os_type == os_windows) && (os_browser == browser_not_a_browser) {
+	window_frame_update();	
+}*/
+
 if (static_timer == 0) {
 	
 	if (cameraChange) {
@@ -58,10 +62,22 @@ if (static_timer == 0) {
 		}
 	}
 	
-	if (os_browser != browser_not_a_browser) {
 		surface_resize(application_surface,display_get_width(), display_get_height());
 		window_set_size(display_get_width(), display_get_height());
-	}
+		/*if (window_frame_get_visible()) {
+		var w = window_frame_get_width();
+		var h = window_frame_get_height();
+		if (w > 0 && h > 0 && surface_exists(application_surface)
+		&& (window_get_width() != w || window_get_height() != h)
+		) {
+        // resize room (since we don't use views):
+       // room_width = w; room_height = h;
+        // resize the game inside the frame-window to fit it's size:
+        window_frame_set_region(0, 0, w, h);
+        // also resize application_surface:
+        surface_resize(application_surface, w, h);
+    }
+}*/
 	
 	if audio_sound_is_playable(Buzz_Fan_Florescent2) {
 		if !audio_is_playing(Buzz_Fan_Florescent2) {
