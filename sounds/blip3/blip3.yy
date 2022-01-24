@@ -12,7 +12,7 @@
     "path": "audiogroups/audiogroup_default",
   },
   "soundFile": "blip3.wav",
-  "duration": 0.207358,
+  "duration": 0.202358,
   "parent": {
     "name": "UI",
     "path": "folders/Sounds/UI.yy",

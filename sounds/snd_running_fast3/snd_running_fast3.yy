@@ -12,7 +12,7 @@
     "path": "audiogroups/audiogroup_default",
   },
   "soundFile": "snd_running_fast3.wav",
-  "duration": 2.235884,
+  "duration": 2.230884,
   "parent": {
     "name": "Animatronic",
     "path": "folders/Sounds/Animatronic.yy",

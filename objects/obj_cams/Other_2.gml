@@ -17,101 +17,13 @@ function resetFoxy() {
 	backSprite = currentCamera.scene;
 }
 
-function audioSwitchPirate() {
-	switch(currentCamera.location) {
-		case locations.PirateCove:
-			audio_sound_gain(snd_pirate_song,.6*game_settings.volume_ambient,0);	
-		break;
-		
-		case locations.PartyRoom:
-		case locations.Backstage:
-			audio_sound_gain(snd_pirate_song,.4*game_settings.volume_ambient,0);	
-		break;
-		
-		case locations.Stage:
-		case locations.HallwayLeftA:
-		case locations.Closet:
-			audio_sound_gain(snd_pirate_song,.1*game_settings.volume_ambient,0);	
-		break;
-		
-		default:
-			audio_sound_gain(snd_pirate_song,.05*game_settings.volume_ambient,0);	
-		break;
-	}	
-}
-
-function audioSwitchKitchen() {
-	
-	var _audioOven = -1;
-	var _audioMusic = -1;
-	
-	// Moving kitchen
-	if (audio_is_playing(snd_OVEN_DRA_1_GEN_HDF18119)) {
-		_audioOven = snd_OVEN_DRA_1_GEN_HDF18119;	
-	} else if (audio_is_playing(snd_OVEN_DRAWE_GEN_HDF18122)) {
-		_audioOven = snd_OVEN_DRAWE_GEN_HDF18122;	
-	} else if (audio_is_playing(snd_OVEN_DRA_2_GEN_HDF18120)) {
-		_audioOven = snd_OVEN_DRA_2_GEN_HDF18120;	
-	} else if (audio_is_playing(snd_OVEN_DRA_7_GEN_HDF18121)) {
-		_audioOven = snd_OVEN_DRA_7_GEN_HDF18121;	
-	}
-	
-	if (audio_is_playing(snd_circius)) {
-		_audioMusic = snd_circius;	
-	} else if (audio_is_playing(snd_music_box)) {
-		_audioMusic = snd_music_box;	
-	}
-	
-	if (audio_exists(_audioOven)) {
-		switch(currentCamera.location) {
-			case locations.Kitchen:
-				audio_sound_gain(_audioOven,.4*game_settings.volume_ambient,0);	
-			break;
-			
-			case locations.HallwayRightA:
-			case locations.Restrooms:
-				audio_sound_gain(_audioOven,.3*game_settings.volume_ambient,0);	
-			break;
-			
-			case locations.HallwayRightB:
-				audio_sound_gain(_audioOven,.1*game_settings.volume_ambient,0);	
-			break;
-			
-			default:
-				audio_sound_gain(_audioOven,0*game_settings.volume_ambient,0);	
-			break;
-		}	
-	}
-	
-	if (audio_exists(_audioMusic)) {
-		switch(currentCamera.location) {
-			case locations.Kitchen:
-				audio_sound_gain(_audioMusic,.5*game_settings.volume_ambient,0);	
-			break;
-			
-			case locations.HallwayRightA:
-			case locations.Restrooms:
-				audio_sound_gain(_audioMusic,.3*game_settings.volume_ambient,0);	
-			break;
-			
-			case locations.HallwayRightB:
-				audio_sound_gain(_audioMusic,.1*game_settings.volume_ambient,0);	
-			break;
-			
-			default:
-				audio_sound_gain(_audioMusic,.05*game_settings.volume_ambient,0);	
-			break;
-		}	
-	}
-}
-
-
 function sceneSwitch() {
 	
 	if (visitedFoxyRun) {	
 		if !audio_is_playing(snd_knock2) && animatronics.Foxy.foxyStage == 3 {
 			var _index = audio_play_sound(snd_knock2, 0, false);	
 			audio_sound_gain(_index, game_settings.volume_animatronics, 0);
+			global.currentAudio.knocking = _index;
 		}
 		
 		resetFoxy();
@@ -166,10 +78,14 @@ function sceneSwitch() {
 		case locations.HallwayRightA:
 			backIndex = 0;
 			
+			if (irandom(100) == 0) {
+				backIndex = choose(1, 2);	
+			}
+			
 			if (animatronics.Chica.location == locations.HallwayRightA) {
-				backIndex = 1 + animatronics.Chica.subPos;
+				backIndex = 2 + animatronics.Chica.subPos;
 			} else if (animatronics.Freddy.location == locations.HallwayRightA) {
-				backIndex = 3;
+				backIndex = 4;
 			}
 		break;
 		
@@ -184,7 +100,15 @@ function sceneSwitch() {
 		break;
 		
 		case locations.PirateCove: 
-			backIndex = animatronics.Foxy.foxyStage;
+			if (animatronics.Foxy.foxyStage == 3) {
+				if (irandom(10) == 0) {
+					backIndex = 4;
+				} else {
+					backIndex = animatronics.Foxy.foxyStage;	
+				}
+			} else {
+				backIndex = animatronics.Foxy.foxyStage;	
+			}
 		break;
 		
 		case locations.Backstage: 
@@ -218,9 +142,18 @@ function sceneSwitch() {
 		
 		case locations.HallwayLeftB:
 			if (animatronics.Bonnie.location == locations.HallwayLeftB) {
-				backIndex = choose(2, 2, 2, 3, 3, 4);
+				backIndex = choose(3, 3, 3, 4, 4, 5);
 			} else {
-				backIndex = choose(0,0,0,0,0,0,0,0,1);	
+				if (irandom(100000) == 0) {
+					backIndex = 2;	
+					if !(audio_is_playing(snd_golden_freddy)) {
+						var _index = audio_play_sound(snd_golden_freddy, 0, false);
+						audio_sound_gain(_index, obj_cams.game_settings.volume_animatronics, 0);
+						global.currentAudio.animatronics = _index;
+					}
+				} else {
+					backIndex = choose(0,0,0,0,0,0,0,0,1);		
+				}
 			}
 		break;
 		
@@ -295,3 +228,5 @@ if (game_settings.last_location != -1) {
 }
 
 sceneSwitch();
+
+global.hasStarted = true;

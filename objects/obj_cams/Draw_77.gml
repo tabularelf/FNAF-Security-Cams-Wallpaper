@@ -5,6 +5,8 @@
 -(((---(((--------
 Cat Judges your code
 */
-shader_set(shd_bend);
-draw_surface(application_surface,0,0);
-shader_reset();
+if (global.animatronicsIsMoving <= 0) {
+	shader_set(shd_bend);
+	draw_surface_stretched(application_surface,0,0, browser_width, browser_height);
+	shader_reset();
+}

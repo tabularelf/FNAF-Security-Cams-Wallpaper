@@ -6,6 +6,27 @@
 Cat Judges your code
 */
 
+global.width = 1;
+global.height = 1;
+
+global.currentAudio = {
+		foxyRunning: -1,
+		freddyLaugh: -1,
+		blipClick: -1,
+		buzzFan: -1,
+		VCRSFX: -1,
+		normalRunningLeft: -1,
+		normalRunningRight: -1,
+		cameraChange: -1,
+		pirateSong: -1,
+		kitchenSong: -1,
+		kitchenPans: -1,
+		knocking: -1,
+		eerieAmbience: -1,
+		hallucinations: -1,
+		garbled: -1,
+};
+
 randomize();
 function moveAnimatronic(_animatronic) {
 			var _lastLocation = _animatronic.location;
@@ -38,13 +59,19 @@ function moveAnimatronic(_animatronic) {
 					break;
 					
 					case locations.HallwayLeftB:
-						_animatronic.location = locations.PartyRoom;
-						var _index = audio_play_sound(snd_running_fast3, 0, false);
-						audio_sound_gain(_index, .5*game_settings.volume_animatronics, 0);
+						if (irandom(3) == 0) {
+							_animatronic.location = locations.PartyRoom;
+							var _index = audio_play_sound(snd_running_fast3, 0, false);
+							audio_sound_gain(_index, .5*game_settings.volume_animatronics, 0);
+							global.currentAudio.normalRunningLeft = _index;
+						} else {
+							_animatronic.location = locations.Closet;	
+						}
 					break;
 				}
 				if (currentCamera.location == _lastLocation) || (currentCamera.location == _animatronic.location) {
 					cameraChangeFlicker();
+					animatronicMovedChange();
 				}
 				sceneSwitch();
 			break;
@@ -90,11 +117,13 @@ function moveAnimatronic(_animatronic) {
 						_animatronic.location = locations.PartyRoom;
 						var _index = audio_play_sound(snd_running_fast3, 0, false);
 						audio_sound_gain(_index, .5*game_settings.volume_animatronics, 0);
+						global.currentAudio.normalRunningRight = _index;
 					break;
 				}
 				
 				if (currentCamera.location == _lastLocation) || (currentCamera.location == _animatronic.location) {
 					cameraChangeFlicker();
+					animatronicMovedChange();
 				}
 				sceneSwitch();
 			break;
@@ -123,6 +152,7 @@ function moveAnimatronic(_animatronic) {
 						if audio_sound_is_playable(_laugh) {
 							var _index = audio_play_sound(_laugh, 0, false);
 							audio_sound_gain(_laugh, .5*game_settings.volume_animatronics, 0);
+							global.currentAudio.freddyLaugh = _index;
 						}
 						
 						switch(_animatronic.location) {
@@ -150,11 +180,13 @@ function moveAnimatronic(_animatronic) {
 								_animatronic.location = locations.PartyRoom;
 								var _index = audio_play_sound(snd_running_fast3, 0, false);
 								audio_sound_gain(_index, .5*game_settings.volume_animatronics, 0);
+								global.currentAudio.normalRunningRight = _index;
 							break;
 						}
 					
 					if (currentCamera.location == _lastLocation) || (currentCamera.location == _animatronic.location) {
 						cameraChangeFlicker();
+						animatronicMovedChange();
 					}
 					sceneSwitch();
 					}
@@ -238,6 +270,8 @@ for(var _i = 0; _i < sprite_get_number(spr_foxy_run); ++_i) {
 	_foxyFrames[1][_i] = _i;	
 }*/
 
+game_settings = {};
+init_game_settings();
 update_game_settings(true, "STAGE", .5, .5, .5);
 
 if (file_exists("settings.txt")) {
@@ -315,3 +349,7 @@ backIndex = 0;
 //alarm[1] = irandom_range(480, 1800);
 cameraChange = false;
 cameraChangeIndex = 0;
+randomHallucinationsNum = 0;
+randomHallucinationsNumTimer = 5;
+randomHallucinations = 0;
+global.animatronicsHaveMoved = false;

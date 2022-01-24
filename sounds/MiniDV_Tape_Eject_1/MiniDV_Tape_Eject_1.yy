@@ -12,7 +12,7 @@
     "path": "audiogroups/audiogroup_default",
   },
   "soundFile": "MiniDV_Tape_Eject_1.wav",
-  "duration": 16.6343422,
+  "duration": 16.6293411,
   "parent": {
     "name": "UI",
     "path": "folders/Sounds/UI.yy",

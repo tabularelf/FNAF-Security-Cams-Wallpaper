@@ -9,7 +9,12 @@ Cat Judges your code
 var _mx = device_mouse_x_to_gui(0);
 var _my = device_mouse_y_to_gui(0);
 
-//draw_text(8,8, [mouse_check_button(mb_any), device_mouse_check_button(0, mb_any), _mx, _my]);
+// Do while random hallucination is on
+if (randomHallucinations) {
+	draw_sprite_ext(spr_hallucinations, randomHallucinationsNum, 0, 0, 1, 1, 0, c_white, abs(sin(current_time/100)*.3));
+}
+//draw_text(8,8, global.animatronicsIsMoving);
+//draw_text(8,8, [wallpaperEngineGetMouse(), wallpaperEngineGetMousePressed(), wallpaperEngineGetMouseReleased()]);
 
 // Render static
 draw_sprite_ext(spr_static,	current_time*image_speed_get(spr_static), 0, 0, 1, 1, 0, c_white, .15);
@@ -44,7 +49,7 @@ draw_sprite(spr_num_3, 0,1236, 68);
 draw_sprite(spr_camera_down,0, 544, 700);
 
 #region settings UI
-var _settingX = 32, _settingY = 32, _settingSprite = spr_gear;
+/*var _settingX = 32, _settingY = 32, _settingSprite = spr_gear;
 	var _settingAlpha = 0;
 	// Mute button posit
 	if point_in_rectangle(_mx, _my, _settingX, _settingY, _settingX+sprite_get_width(_settingSprite), _settingY+sprite_get_height(_settingSprite)) {
@@ -227,47 +232,6 @@ if (settingsUIEnabled) {
 		audioSwitchKitchen();
 		audioSwitchPirate();
 	}	
-	#region old Slider Code Don't use
-	/*// Draw Sliders
-	var _sliderSprite = spr_ui, _sliderX = 558, _sliderY1 = 228, _sliderY2 = 276, _sliderY3 = 316;
-	draw_sprite_ext(_sliderSprite, 0, _sliderX, _sliderY1, 11.66667, 1, 0, c_white, 1);
-	draw_sprite_ext(_sliderSprite, 0, _sliderX, _sliderY2, 11.66667, 1, 0, c_white, 1);
-	draw_sprite_ext(_sliderSprite, 0, _sliderX, _sliderY3, 11.66667, 1, 0, c_white, 1);
-	
-	// Draw Slider Knob
-	
-	var _knobSprite = spr_knob, _knobX = 558, _knobY1 = 236, _knobY2 = 280, _knobY3 = 324;
-	
-	// This is not how you do slider stuff btw. This is really dumb. Don't do this.
-	var _sliderPadding = .69; // Haha funny sex number
-	var _sliderMaxPadding = 1.36;
-	
-	// We'll get the knox pos
-	var _knobX1 = _knobX * (game_settings.volume_ambient + _sliderPadding),
-		_knobX2 = _knobX * (game_settings.volume_animatronics + _sliderPadding),
-		_knobX3 = _knobX * (game_settings.volume_ui + _sliderPadding);
-		
-		_knobX1 = clamp(_knobX1, _knobX, _knobX * _sliderMaxPadding);
-	
-	if !(knob1Selected) draw_sprite_ext(_knobSprite, 0, _knobX1, _knobY1, 1, 1, 0, c_white, 1);
-	draw_sprite_ext(_knobSprite, 0, _knobX2, _knobY2, 1, 1, 0, c_white, 1);
-	draw_sprite_ext(_knobSprite, 0, _knobX3, _knobY3, 1, 1, 0, c_white, 1);
-	
-	var _knobOffset = sprite_get_xoffset(_knobSprite);
-	
-	if point_in_rectangle(_mx, _my, _knobX1-_knobOffset, _knobY1-_knobOffset, _knobX1-_knobOffset+sprite_get_width(_knobSprite), _knobY1-_knobOffset+sprite_get_height(_knobSprite)) || (knob1Selected) {
-		if (device_mouse_check_button(0, mb_left)) {
-			knob1Selected = true;	
-		} else {
-			knob1Selected = false;	
-		}
-		
-		if (knob1Selected) {
-			var _ClampKnobX1 = clamp(_mx, _knobX, _knobX * _sliderMaxPadding);
-			draw_sprite(spr_knob,0,_ClampKnobX1,_knobY1);
-			update_game_settings(game_settings.volume_enabled, game_settings.last_location, normalize(_knobX, _knobX * _sliderMaxPadding, _ClampKnobX1));
-		}
-	}*/
 	#endregion
 	
 	// Draw Mute Button
@@ -278,7 +242,7 @@ if (settingsUIEnabled) {
 		update_game_settings(audio_get_master_gain(0), currentCamera.location_name);
 		save_settings();
 	}
-}
+}*/
 #endregion 
 // Camera Buttons
 for(var _i = 0; _i < array_length(cams); ++_i) {
@@ -296,6 +260,7 @@ for(var _i = 0; _i < array_length(cams); ++_i) {
 					if !audio_is_playing(blip3) {
 						var _index = audio_play_sound(blip3, 0, false);
 						audio_sound_gain(_index, game_settings.volume_ui, 0);
+						global.currentAudio.blipClick = _index;
 				}
 			}
 			if(currentCamera != _cam) {
@@ -304,13 +269,13 @@ for(var _i = 0; _i < array_length(cams); ++_i) {
 				backSprite = _cam.scene;
 				sceneSwitch();
 				update_game_settings(audio_get_master_gain(0), currentCamera.location_name);
-				save_settings();
 			}
 			
 			if (_cam.randomAudioChange != -1) {
 				if (irandom(1000) == 0) {
 					var _index = audio_play_sound(_cam.randomAudioChange, 0, false);	
 					audio_sound_gain(_index, .6*game_settings.volume_ui, 0);
+					global.currentAudio.cameraChange = _index;
 				}
 			}
 			for(var _ii = 0; _ii < array_length(cams); ++_ii) {
@@ -322,6 +287,11 @@ for(var _i = 0; _i < array_length(cams); ++_i) {
 	}
 	
 	_cam.render();
+}
+
+// Draw Recording dot
+if (round(sin(current_time/500))) {
+	draw_sprite(spr_recording, 0, 64, 48);
 }
 
 /*draw_text(32,32,animatronics.Foxy);

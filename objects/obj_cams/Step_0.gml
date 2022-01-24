@@ -52,6 +52,68 @@ if !window_has_focus() {
 	window_frame_update();	
 }*/
 
+if (randomHallucinations > 0) && (--randomHallucinationsNumTimer <= 0) {
+	randomHallucinationsNumTimer = 5;
+	randomHallucinationsNum = irandom(sprite_get_number(spr_hallucinations));
+}
+
+if (randomHallucinations > 0) {
+	--randomHallucinations;	
+	if !(audio_is_playing(snd_hallucinations)) {
+		var _index = audio_play_sound(snd_hallucinations, 100, false);
+		audio_sound_gain(_index, obj_cams.game_settings.volume_animatronics, 0);
+		global.currentAudio.hallucinations = _index;
+	}
+} else if (irandom(10000) == 0) {
+	randomHallucinations = irandom_range(1,4)*60;	
+}
+
+if (randomHallucinations <= 0) {
+	if (audio_is_playing(global.currentAudio.hallucinations)) {
+		audio_stop_sound(snd_hallucinations);
+	}
+}
+
+if (global.animatronicsHaveMoved) && (irandom(100000) == 0) {
+	if !(audio_is_playing(snd_eerieAmbience)) {
+		var _index = audio_play_sound(snd_eerieAmbience, 100, false);
+		audio_sound_gain(_index, obj_cams.game_settings.volume_ambient, 0);
+		global.currentAudio.eerieAmbience = _index;
+	}
+}
+
+if (global.animatronicsHaveMoved == false) {
+	if !(audio_is_playing(snd_ambienceSilent)) {
+		var _index = audio_play_sound(snd_ambienceSilent, 100, false);
+		audio_sound_gain(_index, obj_cams.game_settings.volume_ambient, 0);
+		global.currentAudio.eerieAmbience = _index;
+	}	
+} else {
+	if (audio_is_playing(snd_ambienceSilent)) {
+		audio_stop_sound(snd_ambienceSilent);
+	}
+	
+	if !(audio_is_playing(snd_ambienceGeneral)) {
+		var _index = audio_play_sound(snd_ambienceGeneral, 20, false);
+		audio_sound_gain(_index, obj_cams.game_settings.volume_ambient, 0);
+		global.currentAudio.eerieAmbience = _index;	
+	}
+}
+
+if (global.animatronicsIsMoving > 0) {
+		if !(audio_is_playing(global.currentAudio.garbled)) {
+			var _name = "snd_garble" + string(irandom_range(1,3));
+			var _index = audio_play_sound(asset_get_index(_name), 0, false);
+			audio_sound_gain(_index, obj_cams.game_settings.volume_ui, 0);
+			global.currentAudio.garbled = _index;	
+		}
+		--global.animatronicsIsMoving;
+} else {
+	if (audio_is_playing(global.currentAudio.garbled)) {
+		audio_stop_sound(global.currentAudio.garbled);	
+	}
+}
+
 if (static_timer == 0) {
 	
 	if (cameraChange) {
@@ -62,27 +124,20 @@ if (static_timer == 0) {
 		}
 	}
 	
-		surface_resize(application_surface,display_get_width(), display_get_height());
-		window_set_size(display_get_width(), display_get_height());
-		/*if (window_frame_get_visible()) {
-		var w = window_frame_get_width();
-		var h = window_frame_get_height();
-		if (w > 0 && h > 0 && surface_exists(application_surface)
-		&& (window_get_width() != w || window_get_height() != h)
-		) {
-        // resize room (since we don't use views):
-       // room_width = w; room_height = h;
-        // resize the game inside the frame-window to fit it's size:
-        window_frame_set_region(0, 0, w, h);
-        // also resize application_surface:
-        surface_resize(application_surface, w, h);
-    }
-}*/
+	if (global.width != browser_width) || (global.height != browser_height) {
+		surface_resize(application_surface,browser_width, browser_height);
+		window_set_size(browser_width, browser_height);
+		rescaleCanvas();
+		
+		global.width = browser_width;
+		global.height = browser_height;
+	}
 	
 	if audio_sound_is_playable(Buzz_Fan_Florescent2) {
 		if !audio_is_playing(Buzz_Fan_Florescent2) {
 			var _index = audio_play_sound(Buzz_Fan_Florescent2, 0, false);
 			audio_sound_gain(_index, .3*game_settings.volume_ambient, 0);
+			global.currentAudio.buzzFan = _index;
 		}
 	}
 	
@@ -90,12 +145,13 @@ if (static_timer == 0) {
 		if !audio_is_playing(MiniDV_Tape_Eject_1) {
 			var _index = audio_play_sound(MiniDV_Tape_Eject_1, 0, false);
 			audio_sound_gain(_index, game_settings.volume_ui, 0);
+			global.currentAudio.VCRSFX = _index;
 		}
 	}
 	
 	// Animatronic moving
 	#region Foxy goes first
-	if (irandom(6000) == 0) {
+	if (irandom(6000  * (1.1 - (game_settings.foxyAI - 9))) == 0) {
 		if (currentCamera.location != locations.PirateCove) {
 			if (animatronics.Foxy.foxyStage != 3) && !(visitedFoxyRun) {
 				++animatronics.Foxy.foxyStage;	
@@ -110,6 +166,7 @@ if (static_timer == 0) {
 			if !(audio_is_playing(snd_run)) {
 				var _index = audio_play_sound(snd_run,0, false);	
 				audio_sound_gain(_index, .6*game_settings.volume_animatronics, 0);
+				global.currentAudio.foxyRunning = _index;
 			}
 		} 
 	} else {
@@ -118,6 +175,7 @@ if (static_timer == 0) {
 				if !audio_is_playing(snd_knock2) {
 					var _index = audio_play_sound(snd_knock2, 0, false);	
 					audio_sound_gain(_index, game_settings.volume_animatronics, 0);
+					global.currentAudio.knocking = _index;
 				}	
 				resetFoxy();
 				sceneSwitch();
@@ -130,9 +188,15 @@ if (static_timer == 0) {
 	
 	if (foxyAnimateRun == sprite_get_number(spr_foxy_run)-1) {
 		resetFoxy();
+		if (animatronics.Bonnie.location == locations.HallwayLeftA) {
+				backIndex = 1;
+			} else {
+				backIndex = 0;	
+			}
 		if !audio_is_playing(snd_knock2) {
 			var _index = audio_play_sound(snd_knock2, 0, false);	
 			audio_sound_gain(_index, game_settings.volume_animatronics, 0);
+			global.currentAudio.knocking = _index;
 		}
 	}
 	
@@ -141,6 +205,7 @@ if (static_timer == 0) {
 		if (animatronics.Foxy.foxyStage == 0) {
 			if !(audio_is_playing(snd_pirate_song)) {
 				var _index = audio_play_sound(snd_pirate_song, 0, false);
+				global.currentAudio.pirateSong = _index;
 				audioSwitchPirate();
 			}
 		}
@@ -148,29 +213,31 @@ if (static_timer == 0) {
 	#endregion
 	
 	#region Bonnie/Chica/Freddy Move
-		if (irandom(1800) == 0) {
+		if (irandom(1800 * (1.1 - (game_settings.bonnieAI - 9))) == 0) {
 			moveAnimatronic(animatronics.Bonnie);
 		}
 		
-		if (irandom(1600) == 0) {
+		if (irandom(1600 * (1.1 - (game_settings.chicaAI - 9))) == 0) {
 			moveAnimatronic(animatronics.Chica);
 		}
 		
-		if (irandom(2400) == 0) {
+		if (irandom(2400 * (1.1 - (game_settings.freddyAI - 9))) == 0) {
 			moveAnimatronic(animatronics.Freddy);	
 		}
 		
 		if (animatronics.Chica.location == locations.Kitchen) {
 			if (irandom(120) == 0) {
 				if !(audio_is_playing(snd_OVEN_DRA_1_GEN_HDF18119) || audio_is_playing(snd_OVEN_DRA_2_GEN_HDF18120)	 || audio_is_playing(snd_OVEN_DRA_7_GEN_HDF18121) || audio_is_playing(snd_OVEN_DRAWE_GEN_HDF18122)) {
-					audio_play_sound(choose(snd_OVEN_DRA_1_GEN_HDF18119, snd_OVEN_DRA_2_GEN_HDF18120, snd_OVEN_DRA_7_GEN_HDF18121, snd_OVEN_DRAWE_GEN_HDF18122), 0, false);
+					var _index = audio_play_sound(choose(snd_OVEN_DRA_1_GEN_HDF18119, snd_OVEN_DRA_2_GEN_HDF18120, snd_OVEN_DRA_7_GEN_HDF18121, snd_OVEN_DRAWE_GEN_HDF18122), 0, false);
+					global.currentAudio.kitchenPans = _index;
 					audioSwitchKitchen();
 				}
 		} 
 			
 			if (irandom(1200) == 0) {
 				if !(audio_is_playing(snd_music_box) || audio_is_playing(snd_circius)) {
-					audio_play_sound(snd_circius, 0, false);
+					var _index = audio_play_sound(snd_circius, 0, false);
+					global.currentAudio.kitchenSong = _index;
 					audioSwitchKitchen();
 				}
 			}
@@ -181,7 +248,8 @@ if (static_timer == 0) {
 		if (animatronics.Freddy.location == locations.Kitchen) {
 			if (irandom(2400) == 0) {
 				if !(audio_is_playing(snd_music_box) || audio_is_playing(snd_circius)) {
-					audio_play_sound(snd_music_box, 0, false);
+					var _index = audio_play_sound(snd_music_box, 0, false);
+					global.currentAudio.kitchenSong = _index;
 					audioSwitchKitchen();
 				}
 			}	
