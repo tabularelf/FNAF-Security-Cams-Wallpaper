@@ -13,8 +13,6 @@ var _my = device_mouse_y_to_gui(0);
 if (randomHallucinations) {
 	draw_sprite_ext(spr_hallucinations, randomHallucinationsNum, 0, 0, 1, 1, 0, c_white, abs(sin(current_time/100)*.3));
 }
-//draw_text(8,8, global.animatronicsIsMoving);
-//draw_text(8,8, [wallpaperEngineGetMouse(), wallpaperEngineGetMousePressed(), wallpaperEngineGetMouseReleased()]);
 
 // Render static
 draw_sprite_ext(spr_static,	current_time*image_speed_get(spr_static), 0, 0, 1, 1, 0, c_white, .15);
@@ -38,10 +36,29 @@ draw_sprite(spr_percent, 0, 220 , 652);
 draw_sprite(spr_power_usage_sign, 0, 32, 680);
 draw_sprite(spr_power_usage, 0,112, 672);
 
-draw_sprite(spr_num_2, 0,1172, 34);
-draw_sprite(spr_am, 0,1204, 36);
-draw_sprite(spr_night, 0,1168, 68);	
-draw_sprite(spr_num_3, 0,1236, 68);
+// Time
+var _dateTime = date_current_datetime();//date_create_datetime(2005, 10, current_time / 1000, current_time / 1000, 0, 0);
+var _hour = date_get_hour(_dateTime);
+var _hourMod = _hour mod 12;
+if (_hourMod == 0) {
+	_hourMod = 12;	
+}
+
+draw_set_font(numFontTime);
+draw_set_halign(fa_right);
+draw_text(1204 - (sprite_get_width(spr_fontNumbersTime) div 4), 24, _hourMod);
+draw_sprite(spr_am, (_hour div 12) mod 2, 1204, 26);
+
+//draw_sprite(spr_num_2, 0,1172, 34);
+//draw_sprite(spr_am, 0,1204, 36);
+
+// Night
+draw_set_halign(fa_left);
+draw_set_font(numFontNights);
+draw_sprite(spr_night, 0,1164, 58);
+var _day = date_get_weekday(_dateTime)+1;
+draw_text(1232, 56, _day);
+//draw_sprite(spr_num_3, 0,1236, 68);
 
 // Rest of UI
 

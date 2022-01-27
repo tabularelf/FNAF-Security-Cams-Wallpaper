@@ -8,6 +8,9 @@ Cat Judges your code
 
 global.width = 1;
 global.height = 1;
+numFontTime = font_add_sprite_ext(spr_fontNumbersTime, "0123456789", true, 2);
+numFontNights = font_add_sprite_ext(spr_fontNumbersNights, "0123456789", true, 2);
+date_set_timezone(timezone_local);
 
 global.currentAudio = {
 		foxyRunning: -1,
@@ -59,21 +62,21 @@ function moveAnimatronic(_animatronic) {
 					break;
 					
 					case locations.HallwayLeftB:
-						if (irandom(3) == 0) {
+						if (irandom(3) != 0) {
 							_animatronic.location = locations.PartyRoom;
 							var _index = audio_play_sound(snd_running_fast3, 0, false);
 							audio_sound_gain(_index, .5*game_settings.volume_animatronics, 0);
 							global.currentAudio.normalRunningLeft = _index;
 						} else {
-							_animatronic.location = locations.Closet;	
+							_animatronic.location = locations.HallwayLeftA;	
 						}
 					break;
 				}
 				if (currentCamera.location == _lastLocation) || (currentCamera.location == _animatronic.location) {
 					cameraChangeFlicker();
 					animatronicMovedChange();
+					sceneSwitch();
 				}
-				sceneSwitch();
 			break;
 			
 			case animatronics.Chica:
@@ -114,18 +117,22 @@ function moveAnimatronic(_animatronic) {
 					break;
 					
 					case locations.HallwayRightB:
+					if (irandom(3) != 0) {
 						_animatronic.location = locations.PartyRoom;
 						var _index = audio_play_sound(snd_running_fast3, 0, false);
 						audio_sound_gain(_index, .5*game_settings.volume_animatronics, 0);
 						global.currentAudio.normalRunningRight = _index;
+					} else {
+						_animatronic.location = locations.HallwayRightA;
+					}
 					break;
 				}
 				
 				if (currentCamera.location == _lastLocation) || (currentCamera.location == _animatronic.location) {
 					cameraChangeFlicker();
 					animatronicMovedChange();
+					sceneSwitch();
 				}
-				sceneSwitch();
 			break;
 			
 			case animatronics.Freddy:
@@ -187,8 +194,8 @@ function moveAnimatronic(_animatronic) {
 					if (currentCamera.location == _lastLocation) || (currentCamera.location == _animatronic.location) {
 						cameraChangeFlicker();
 						animatronicMovedChange();
+						sceneSwitch();
 					}
-					sceneSwitch();
 					}
 				}
 			break;

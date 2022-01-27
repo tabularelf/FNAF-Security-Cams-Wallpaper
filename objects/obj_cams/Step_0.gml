@@ -115,6 +115,27 @@ if (global.animatronicsIsMoving > 0) {
 }
 
 if (static_timer == 0) {
+	if (currentCamera.location == locations.HallwayLeftB) && (backIndex == 0) {
+		if (device_mouse_check_button_pressed(0, mb_left)) {
+			if (point_in_circle(device_mouse_x(0), device_mouse_y(0), 658, 166, 12))	 {
+				//if !audio_is_playing(snd_freddynose) {
+					var _index = audio_play_sound(snd_freddynose, 0, false);
+					audio_sound_gain(_index, .3*game_settings.volume_ui, 0);
+					global.currentAudio.blipClick = _index;
+				//}
+			}	
+		}
+	} else if (currentCamera.location == locations.HallwayLeftB) && (backIndex == 2) {
+		if (device_mouse_check_button_pressed(0, mb_left)) {
+			if (point_in_circle(device_mouse_x(0), device_mouse_y(0), 658, 232, 16))	 {
+				//if !audio_is_playing(snd_freddynose) {
+					var _index = audio_play_sound(snd_error, 0, false);
+					audio_sound_gain(_index, .3*game_settings.volume_ui, 0);
+					global.currentAudio.blipClick = _index;
+				//}
+			}	
+		}
+	}
 	
 	if (cameraChange) {
 		cameraChangeIndex += image_speed_get(spr_vhs_change);
@@ -178,9 +199,10 @@ if (static_timer == 0) {
 					global.currentAudio.knocking = _index;
 				}	
 				resetFoxy();
-				sceneSwitch();
 				if (currentCamera.location == locations.PirateCove) {
-					cameraChangeFlicker();	
+					cameraChangeFlicker();
+					animatronicMovedChange();
+					sceneSwitch();
 				}
 			}
 		}
