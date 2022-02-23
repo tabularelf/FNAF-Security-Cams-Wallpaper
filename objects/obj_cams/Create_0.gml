@@ -6,11 +6,22 @@
 Cat Judges your code
 */
 
+#macro cameraShuffleTime 60*15
+
 global.width = 1;
 global.height = 1;
 numFontTime = font_add_sprite_ext(spr_fontNumbersTime, "0123456789", true, 2);
 numFontNights = font_add_sprite_ext(spr_fontNumbersNights, "0123456789", true, 2);
+numFontPower = font_add_sprite_ext(spr_fontNumbersPower, "0123456789", true, 2);
 date_set_timezone(timezone_local);
+creditsAlpha = 1;
+alarm[2] = 60*8;
+cameraShuffleTimer = cameraShuffleTime;
+
+paused = false;
+alpha = 1;
+textUp = 0;
+global.chimeSound = -1;
 
 global.currentAudio = {
 		foxyRunning: -1,
@@ -37,7 +48,13 @@ function moveAnimatronic(_animatronic) {
 			case animatronics.Bonnie: 
 				switch(_animatronic.location) {
 					case locations.Stage:
-						_animatronic.location = locations.PartyRoom;
+						if (animatronics.Chica.location == locations.PartyRoom) {
+							moveAnimatronic(animatronics.Chica);
+						} else if (animatronics.Freddy.location == locations.PartyRoom) {
+							moveAnimatronic(animatronics.Freddy);
+						} else {
+							_animatronic.location = locations.PartyRoom;	
+						}
 					break;
 					
 					case locations.PartyRoom:
@@ -46,7 +63,7 @@ function moveAnimatronic(_animatronic) {
 							_animatronic.subPos = 0;
 						} else {
 							++ _animatronic.subPos;	
-						}
+						}	
 					break;
 					
 					case locations.Backstage:
@@ -63,10 +80,18 @@ function moveAnimatronic(_animatronic) {
 					
 					case locations.HallwayLeftB:
 						if (irandom(3) != 0) {
-							_animatronic.location = locations.PartyRoom;
-							var _index = audio_play_sound(snd_running_fast3, 0, false);
-							audio_sound_gain(_index, .5*game_settings.volume_animatronics, 0);
-							global.currentAudio.normalRunningLeft = _index;
+							if (animatronics.Chica.location == locations.PartyRoom) {
+									moveAnimatronic(animatronics.Chica);
+								} else if (animatronics.Freddy.location == locations.PartyRoom) {
+									moveAnimatronic(animatronics.Freddy);
+								} 
+								
+								if (animatronics.Chica.location != locations.PartyRoom) {
+									_animatronic.location = locations.PartyRoom;
+									var _index = audio_play_sound(snd_running_fast3, 0, false);
+									audio_sound_gain(_index, .5*game_settings.volume_animatronics, 0);
+									global.currentAudio.normalRunningLeft = _index;
+							}
 						} else {
 							_animatronic.location = locations.HallwayLeftA;	
 						}
@@ -82,11 +107,20 @@ function moveAnimatronic(_animatronic) {
 			case animatronics.Chica:
 				switch(animatronics.Chica.location) {
 					case locations.Stage:
-						_animatronic.location = locations.PartyRoom;
+					if (animatronics.Bonnie.location == locations.PartyRoom) {
+							moveAnimatronic(animatronics.Bonnie);
+						} else if (animatronics.Freddy.location == locations.PartyRoom) {
+							moveAnimatronic(animatronics.Freddy);
+						} else {
+							_animatronic.location = locations.PartyRoom;
+						}
 					break;
 					
 					case locations.PartyRoom:
 						if (_animatronic.subPos > 0) {
+							if (animatronics.Freddy.location == locations.Restrooms) {
+								moveAnimatronic(animatronics.Freddy);	
+							}
 							_animatronic.location = locations.Restrooms;	
 							_animatronic.subPos = 0;
 						} else {
@@ -104,13 +138,22 @@ function moveAnimatronic(_animatronic) {
 					break;
 					
 					case locations.Kitchen:
+						if (animatronics.Freddy.location == locations.HallwayRightA) {
+							moveAnimatronic(animatronics.Freddy);	
+						}
+						
 						_animatronic.location = locations.HallwayRightA;
 					break;
 					
 					case locations.HallwayRightA:
 						if (_animatronic.subPos > 0) {
-							_animatronic.location = locations.HallwayRightB;	
-							_animatronic.subPos = 0;
+							if (animatronics.Freddy.location == locations.HallwayRightB) {
+								moveAnimatronic(animatronics.Freddy);	
+							}
+							if (animatronics.Freddy.location != locations.HallwayRightB) {
+								_animatronic.location = locations.HallwayRightB;	
+								_animatronic.subPos = 0;
+							}
 						} else {
 							++ _animatronic.subPos;	
 						}
@@ -118,12 +161,21 @@ function moveAnimatronic(_animatronic) {
 					
 					case locations.HallwayRightB:
 					if (irandom(3) != 0) {
-						_animatronic.location = locations.PartyRoom;
-						var _index = audio_play_sound(snd_running_fast3, 0, false);
-						audio_sound_gain(_index, .5*game_settings.volume_animatronics, 0);
-						global.currentAudio.normalRunningRight = _index;
+						if (animatronics.Bonnie.location == locations.PartyRoom) {
+								moveAnimatronic(animatronics.Bonnie);
+							} else if (animatronics.Freddy.location == locations.PartyRoom) {
+								moveAnimatronic(animatronics.Freddy);
+							} 
+						
+						if (animatronics.Bonnie.location != locations.PartyRoom) {
+							_animatronic.location = locations.PartyRoom;
+							var _index = audio_play_sound(snd_running_fast3, 0, false);
+							audio_sound_gain(_index, .5*game_settings.volume_animatronics, 0);
+							global.currentAudio.normalRunningRight = _index;
+						}
 					} else {
 						_animatronic.location = locations.HallwayRightA;
+						_animatronic.subPos = 0;
 					}
 					break;
 				}
@@ -145,8 +197,10 @@ function moveAnimatronic(_animatronic) {
 					} else {
 						moveAnimatronic(animatronics.Bonnie);	
 					}
-				} else if animatronics.Chica.location == locations.Stage {
+				} else if (animatronics.Chica.location == locations.Stage) {
 					moveAnimatronic(animatronics.Chica);
+				} else if (animatronics.Bonnie.location == locations.PartyRoom) {
+					moveAnimatronic(animatronics.Bonnie);
 				} else {
 					if currentCamera.location != _animatronic.location {
 						if (audio_is_playing(snd_Laugh_Giggle_Girl_1d) || audio_is_playing(snd_Laugh_Giggle_Girl_2d) || audio_is_playing(snd_Laugh_Giggle_Girl_8d)) {
@@ -156,11 +210,7 @@ function moveAnimatronic(_animatronic) {
 						}
 						
 						var _laugh = choose(snd_Laugh_Giggle_Girl_1d, snd_Laugh_Giggle_Girl_2d, snd_Laugh_Giggle_Girl_8d);
-						if audio_sound_is_playable(_laugh) {
-							var _index = audio_play_sound(_laugh, 0, false);
-							audio_sound_gain(_laugh, .5*game_settings.volume_animatronics, 0);
-							global.currentAudio.freddyLaugh = _index;
-						}
+						var _canPlay = true;
 						
 						switch(_animatronic.location) {
 							case locations.Stage:
@@ -168,7 +218,15 @@ function moveAnimatronic(_animatronic) {
 							break;	
 							
 							case locations.PartyRoom:
-								_animatronic.location = locations.Restrooms;
+								if (animatronics.Chica.location == locations.Restrooms) {
+									moveAnimatronic(animatronics.Chica);	
+								}
+								
+								if (animatronics.Chica.location != locations.Restrooms) {
+									_animatronic.location = locations.Restrooms;
+								} else {
+									_canPlay = false;	
+								}
 							break;
 							
 							case locations.Restrooms:
@@ -176,19 +234,54 @@ function moveAnimatronic(_animatronic) {
 							break;
 							
 							case locations.Kitchen:
-								_animatronic.location = locations.HallwayRightA;
+								if (animatronics.Chica.location == locations.HallwayRightA) {
+									moveAnimatronic(animatronics.Chica);	
+								}
+							
+								if (animatronics.Chica.location != locations.HallwayRightA) {
+									_animatronic.location = locations.HallwayRightA;
+								} else {
+									_canPlay = false;	
+								}
 							break;
 							
 							case locations.HallwayRightA:
-								_animatronic.location = locations.HallwayRightB;
+								if (animatronics.Chica.location == locations.HallwayRightB) {
+									moveAnimatronic(animatronics.Chica);	
+								}
+							
+								if (animatronics.Chica.location != locations.HallwayRightB) {
+									_animatronic.location = locations.HallwayRightB;
+								} else {
+									_canPlay = false;	
+								}
 							break;
 							
 							case locations.HallwayRightB:
-								_animatronic.location = locations.PartyRoom;
-								var _index = audio_play_sound(snd_running_fast3, 0, false);
-								audio_sound_gain(_index, .5*game_settings.volume_animatronics, 0);
-								global.currentAudio.normalRunningRight = _index;
+								if (animatronics.Bonnie.location == locations.PartyRoom) {
+									moveAnimatronic(animatronics.Bonnie);
+								} else if (animatronics.Chica.location == locations.PartyRoom) {
+									moveAnimatronic(animatronics.Chica);
+								} 
+								
+								if (animatronics.Bonnie.location != locations.PartyRoom && animatronics.Chica.location != locations.PartyRoom) {
+									_animatronic.location = locations.PartyRoom;
+									var _index = audio_play_sound(snd_running_fast3, 0, false);
+									audio_sound_gain(_index, .5*game_settings.volume_animatronics, 0);
+									global.currentAudio.normalRunningRight = _index;
+								} else {
+									_canPlay = false;	
+								}
 							break;
+						}
+						
+						show_debug_message(_canPlay);
+						if (_canPlay == true) {
+							if audio_sound_is_playable(_laugh) {
+								var _index = audio_play_sound(_laugh, 0, false);
+								audio_sound_gain(_laugh, .5*game_settings.volume_animatronics, 0);
+								global.currentAudio.freddyLaugh = _index;
+							}	
 						}
 					
 					if (currentCamera.location == _lastLocation) || (currentCamera.location == _animatronic.location) {

@@ -9,13 +9,19 @@ Cat Judges your code
 var _mx = device_mouse_x_to_gui(0);
 var _my = device_mouse_y_to_gui(0);
 
+if (paused) {
+	draw_set_alpha(alpha);	
+}
+
 // Do while random hallucination is on
-if (randomHallucinations) {
+//draw_text(12, 32, batteryHTML5Get());
+
+if (randomHallucinations) && !(paused) {
 	draw_sprite_ext(spr_hallucinations, randomHallucinationsNum, 0, 0, 1, 1, 0, c_white, abs(sin(current_time/100)*.3));
 }
 
 // Render static
-draw_sprite_ext(spr_static,	current_time*image_speed_get(spr_static), 0, 0, 1, 1, 0, c_white, .15);
+draw_sprite_ext(spr_static,	current_time*image_speed_get(spr_static), 0, 0, 1, 1, 0, c_white, min(.15, alpha));
 
 if (cameraChange) {
 	draw_sprite(spr_vhs_change,	cameraChangeIndex,0, 0);	
@@ -27,10 +33,25 @@ draw_sprite(spr_cam_border, 0, 0, 0);
 draw_sprite(spr_site_map,0,864,320);
 
 // Power/Usage Words
+draw_set_font(numFontPower);
 draw_sprite(spr_power_left, 0, 32, 652);
-draw_sprite(spr_num_9, 0, 176, 644);
-draw_sprite(spr_num_0, 0, 196 , 644);
-draw_sprite(spr_percent, 0, 220 , 652);
+var _bat = 100;
+if (os_browser != browser_not_a_browser) {
+	_bat =  batteryHTML5Get()[1];	
+	if (_bat == undefined) {
+		_bat = 100;
+	} else {
+		_bat = _bat * 100;	
+	}
+}
+
+//_bat = (_bat mod 101);
+
+draw_text(176, 644, _bat);
+//draw_sprite(spr_num_9, 0, 176, 644);
+//draw_sprite(spr_num_0, 0, 196 , 644);
+//draw_sprite(spr_percent, 0, 220 , 652);
+draw_sprite(spr_percent, 0, 176 + string_width(_bat) + 4 , 644 + (string_height(_bat)/2));
 
 
 draw_sprite(spr_power_usage_sign, 0, 32, 680);
@@ -56,7 +77,21 @@ draw_sprite(spr_am, (_hour div 12) mod 2, 1204, 26);
 draw_set_halign(fa_left);
 draw_set_font(numFontNights);
 draw_sprite(spr_night, 0,1164, 58);
-var _day = date_get_weekday(_dateTime)+1;
+var _day = 1;
+if (game_settings.isFirstDaySunday) {
+	_day = date_get_weekday(_dateTime)+1;
+} else {
+	_day = wrap(date_get_weekday(_dateTime)-1, 0, 6); 	
+	switch(_day) {
+		case 0: _day = 1; break;
+		case 1: _day = 2; break;
+		case 2: _day = 3; break;
+		case 3: _day = 4; break;
+		case 4: _day = 5; break;
+		case 5: _day = 6; break;
+		case 6: _day = 7; break;
+	}
+}
 draw_text(1232, 56, _day);
 //draw_sprite(spr_num_3, 0,1236, 68);
 
@@ -64,6 +99,18 @@ draw_text(1232, 56, _day);
 
 // Camera Button
 draw_sprite(spr_camera_down,0, 544, 700);
+
+/*var _settingX = 32, _settingY = 32, _settingSprite = spr_gear;
+if mouse_check_button_released(mb_left) {
+	if point_in_rectangle(_mx, _my, _settingX, _settingY, _settingX+sprite_get_width(_settingSprite), _settingY+sprite_get_height(_settingSprite)) {
+		if !(paused) {
+			paused = true;
+			audio_stop_all();
+			global.chimeSound = audio_play_sound(chimes_2, 1, false);
+			alarm[1] = 60*5;
+		}
+	}
+}*/
 
 #region settings UI
 /*var _settingX = 32, _settingY = 32, _settingSprite = spr_gear;
@@ -311,8 +358,54 @@ if (round(sin(current_time/500))) {
 	draw_sprite(spr_recording, 0, 64, 48);
 }
 
+draw_set_font(numFontTime);
+if (paused) {
+	var _five = string_height("5");
+	if (audio_sound_get_track_position(global.chimeSound) >= 3) && (textUp <= _five) {
+		textUp += .2;	
+	}
+	draw_set_alpha(-1*alpha);
+	var _str = "5\n6";
+	var _offsetX = 72;
+	var _x = display_get_gui_width() / 2;
+	var _y = display_get_gui_height() / 2;
+	draw_set_halign(fa_left);
+	draw_set_valign(fa_middle);
+	draw_text(_x-_offsetX, _y-textUp, _str);
+	draw_sprite(spr_am, 0, _x-_offsetX + string_width(_str) + 12, _y-_five);
+	if (alpha >= -.99 && (alpha <= 0)) {
+		draw_set_alpha(1);	
+	}
+	draw_set_colour(c_black);
+	draw_rectangle(_x-_offsetX,_y-(_five), _x-_offsetX+string_width(_str), 0, false);
+	draw_rectangle(_x-_offsetX,_y, _x-_offsetX+string_width(_str), 1024, false);
+	draw_set_colour(c_white);
+}
+draw_set_valign(fa_top);
+
+draw_set_alpha(1);	
+
 /*draw_text(32,32,animatronics.Foxy);
 draw_text(32,64,foxyAnimateRun);
 draw_text(32,96,visitedFoxyRun);*/
 
 //draw_circle(_mx, _my, 32, false);
+
+if (creditsAlpha > 0) {
+	draw_set_font(fnt_text);
+	draw_set_alpha(creditsAlpha);
+	var _str = "Created by TabularElf - "
+	var _str2 = "https://tabelf.link/";
+	draw_text(24, 24, _str);
+	draw_set_colour(c_aqua);
+	draw_text(24+string_width(_str), 24, _str2);
+	/*if (mouse_check_button_released(mb_left)) {
+		if point_in_rectangle(_mx, _my, 24 + string_width(_str), 24, string_width(_str2) + string_width(_str) + 24, 24 + string_height(_str2)) {
+			url_open("https://tabelf.link");	
+		}
+	}*/
+	draw_set_colour(c_white);
+	draw_text_transformed(24 + string_width(_str) + string_width(_str2), 24 + 7, " (Join the Discord for more FNAF content!)", .5, .5, 0);
+	draw_set_alpha(1);
+	draw_set_halign(fa_left);
+}

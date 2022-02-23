@@ -15,6 +15,10 @@ function resetFoxy() {
 	animatronics.Foxy.foxyStage = 0;	
 	foxyAnimateRun = 0;
 	backSprite = currentCamera.scene;
+	if (currentCamera.location == locations.PirateCove) || (currentCamera.location == locations.HallwayLeftA) { 
+		staticChange();
+		animatronicMovedChange();	
+	}
 }
 
 function sceneSwitch() {
@@ -83,9 +87,9 @@ function sceneSwitch() {
 			}
 			
 			if (animatronics.Freddy.location == locations.HallwayRightA) {
-				backIndex = 4;
+				backIndex = 5;
 			} else if (animatronics.Chica.location == locations.HallwayRightA) {
-				backIndex = 2 + animatronics.Chica.subPos;
+				backIndex = 3 + animatronics.Chica.subPos;
 			} 
 		break;
 		
@@ -152,7 +156,7 @@ function sceneSwitch() {
 						global.currentAudio.animatronics = _index;
 					}
 				} else {
-					backIndex = choose(0,0,0,0,0,0,0,0,1);		
+					backIndex = choose(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1);		
 				}
 			}
 		break;

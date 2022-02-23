@@ -1,6 +1,6 @@
 {
   "conversionMode": 0,
-  "compression": 0,
+  "compression": 1,
   "volume": 1.0,
   "preload": false,
   "bitRate": 128,
@@ -12,7 +12,7 @@
     "path": "audiogroups/audiogroup_default",
   },
   "soundFile": "snd_knock2.wav",
-  "duration": 3.329535,
+  "duration": 3.324535,
   "parent": {
     "name": "Animatronic",
     "path": "folders/Sounds/Animatronic.yy",

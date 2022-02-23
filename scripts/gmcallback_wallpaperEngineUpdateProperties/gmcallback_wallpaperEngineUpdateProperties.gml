@@ -75,6 +75,16 @@ function gmcallback_wallpaperEngineUpdateProperties() {
 			save_settings();
 		break;
 		
+		case "fnafisfirstdaysunday":
+			obj_cams.game_settings.isFirstDaySunday = _value;
+			save_settings();
+		break;
+		
+		case "fnafcamerashuffle":
+			obj_cams.game_settings.cameraShuffle = _value;
+			save_settings();
+		break;
+		
 		default:
 			show_debug_message("Unknown property " + _keyName + "! Please let the developer know!");
 		break;

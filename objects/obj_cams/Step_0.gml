@@ -52,6 +52,52 @@ if !window_has_focus() {
 	window_frame_update();	
 }*/
 
+if (game_settings.cameraShuffle) {
+	if (--cameraShuffleTimer <= 0) {
+		 cameraShuffleTimer = cameraShuffleTime;
+		 
+		 var _cam = cams[irandom(array_length(cams)-1)];
+		 // Make sure it's not the same camera
+		 if (_cam == currentCamera) {
+				while(_cam == currentCamera) {
+					_cam = cams[irandom(array_length(cams)-1)];	
+				}
+		 }
+		 if audio_sound_is_playable(blip3) {
+					if !audio_is_playing(blip3) {
+						var _index = audio_play_sound(blip3, 0, false);
+						audio_sound_gain(_index, game_settings.volume_ui, 0);
+						global.currentAudio.blipClick = _index;
+				}
+			}
+			if(currentCamera != _cam) {
+				cameraChangeFlicker();
+				currentCamera = _cam;
+				backSprite = _cam.scene;
+				sceneSwitch();
+				update_game_settings(audio_get_master_gain(0), currentCamera.location_name);
+			}
+			
+			if (_cam.randomAudioChange != -1) {
+				if (irandom(1000) == 0) {
+					var _index = audio_play_sound(_cam.randomAudioChange, 0, false);	
+					audio_sound_gain(_index, .6*game_settings.volume_ui, 0);
+					global.currentAudio.cameraChange = _index;
+				}
+			}
+			for(var _ii = 0; _ii < array_length(cams); ++_ii) {
+				cams[_ii].selected = false;	
+			}
+			
+			_cam.selected = true;
+	}
+}
+
+if (paused) {
+	alpha -= .01;	
+	exit;
+}
+
 if (randomHallucinations > 0) && (--randomHallucinationsNumTimer <= 0) {
 	randomHallucinationsNumTimer = 5;
 	randomHallucinationsNum = irandom(sprite_get_number(spr_hallucinations));
@@ -176,6 +222,13 @@ if (static_timer == 0) {
 		if (currentCamera.location != locations.PirateCove) {
 			if (animatronics.Foxy.foxyStage != 3) && !(visitedFoxyRun) {
 				++animatronics.Foxy.foxyStage;	
+			} 
+		} else if (irandom(10) == 0) {
+			if (animatronics.Foxy.foxyStage != 3) && !(visitedFoxyRun) {
+				++animatronics.Foxy.foxyStage;	
+				sceneSwitch();
+				cameraChangeFlicker();
+				animatronicMovedChange();
 			} 
 		}
 	}

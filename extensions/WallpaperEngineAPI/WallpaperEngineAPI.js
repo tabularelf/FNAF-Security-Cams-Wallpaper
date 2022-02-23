@@ -1,6 +1,5 @@
 // Sets to null at start
 var gmlWallpaperEngineProperties = null;
-var mouseDown = 0;
 
 function rescaleCanvas() {
   canvas.width  = window.innerWidth;
@@ -27,12 +26,4 @@ function wallpaperEngineInit() {
 			gml_Script_gmcallback_wallpaperEngineUpdateProperties();
 		}
 	};
-	
-	/*document.body.addEventListener('click', function() {
-		gml_Script_gmcallback_wallpaperEngineUpdate(mouseDown);
-	}, true);*/
-}
-
-function wallpaperEngineGetMouseButton() {
-	
 }

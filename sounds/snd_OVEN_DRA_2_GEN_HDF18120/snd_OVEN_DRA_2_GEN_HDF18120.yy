@@ -1,6 +1,6 @@
 {
   "conversionMode": 0,
-  "compression": 0,
+  "compression": 1,
   "volume": 1.0,
   "preload": false,
   "bitRate": 128,
@@ -12,7 +12,7 @@
     "path": "audiogroups/audiogroup_default",
   },
   "soundFile": "snd_OVEN_DRA_2_GEN_HDF18120.wav",
-  "duration": 5.013209,
+  "duration": 5.008209,
   "parent": {
     "name": "Animatronic",
     "path": "folders/Sounds/Animatronic.yy",

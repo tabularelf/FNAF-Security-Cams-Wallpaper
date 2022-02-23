@@ -1,0 +1,1 @@
+audio_play_sound(CROWD_SMALL_CHIL_EC049202, 0, false);

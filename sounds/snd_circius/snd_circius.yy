@@ -1,6 +1,6 @@
 {
   "conversionMode": 0,
-  "compression": 0,
+  "compression": 3,
   "volume": 1.0,
   "preload": false,
   "bitRate": 128,
@@ -12,7 +12,7 @@
     "path": "audiogroups/audiogroup_default",
   },
   "soundFile": "snd_circius.wav",
-  "duration": 22.106451,
+  "duration": 22.1014519,
   "parent": {
     "name": "Ambient",
     "path": "folders/Sounds/Ambient.yy",

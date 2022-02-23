@@ -1,6 +1,6 @@
 {
   "conversionMode": 0,
-  "compression": 0,
+  "compression": 3,
   "volume": 1.0,
   "preload": false,
   "bitRate": 128,
@@ -12,7 +12,7 @@
     "path": "audiogroups/audiogroup_default",
   },
   "soundFile": "snd_music_box.wav",
-  "duration": 61.6446838,
+  "duration": 61.6396828,
   "parent": {
     "name": "Ambient",
     "path": "folders/Sounds/Ambient.yy",

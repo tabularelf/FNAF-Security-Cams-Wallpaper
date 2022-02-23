@@ -10,7 +10,7 @@ function image_speed_get(_sprite) {
   return sprite_get_speed_type(_sprite) == spritespeed_framespergameframe ? sprite_get_speed(_sprite) :   sprite_get_speed(_sprite)/game_get_speed(gamespeed_fps);
 }
 
-#macro WALLPAPER_VERSION 3
+#macro WALLPAPER_VERSION 5
 
 function init_game_settings() {
 	var _game_settings = obj_cams.game_settings;
@@ -20,7 +20,8 @@ function init_game_settings() {
 	_game_settings.chicaAI = 0;
 	_game_settings.bonnieAI = 0;
 	_game_settings.garbledCamera = true;
-	
+	_game_settings.isFirstDaySunday = true;
+	_game_settings.cameraShuffle = false;
 }
 
 function update_game_settings(_volume_enabled, _last_location, _volume_ambient, _volume_animatronics, _volume_ui) {

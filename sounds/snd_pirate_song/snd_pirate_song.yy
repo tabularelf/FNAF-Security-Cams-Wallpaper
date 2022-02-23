@@ -1,6 +1,6 @@
 {
   "conversionMode": 0,
-  "compression": 0,
+  "compression": 3,
   "volume": 1.0,
   "preload": false,
   "bitRate": 128,
@@ -12,7 +12,7 @@
     "path": "audiogroups/audiogroup_default",
   },
   "soundFile": "snd_pirate_song.wav",
-  "duration": 9.664501,
+  "duration": 9.659501,
   "parent": {
     "name": "Ambient",
     "path": "folders/Sounds/Ambient.yy",
