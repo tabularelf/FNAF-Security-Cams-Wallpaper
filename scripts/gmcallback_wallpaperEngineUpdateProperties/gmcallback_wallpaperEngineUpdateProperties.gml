@@ -85,6 +85,21 @@ function gmcallback_wallpaperEngineUpdateProperties() {
 			save_settings();
 		break;
 		
+		case "fnafflashalpha":
+			obj_cams.game_settings.flashAlpha = _value;
+			save_settings();
+		break;
+		
+		case "fnafstaticalpha":
+			obj_cams.game_settings.staticAlpha = _value;
+			save_settings();
+		break;
+		
+		case "fnaflightflicker":
+			obj_cams.game_settings.lightFlicker = _value;
+			save_settings();
+		break;
+		
 		default:
 			show_debug_message("Unknown property " + _keyName + "! Please let the developer know!");
 		break;

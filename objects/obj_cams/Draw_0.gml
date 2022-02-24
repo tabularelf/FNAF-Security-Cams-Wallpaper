@@ -9,7 +9,7 @@ var _backIndex = backIndex;
 var _backSprite = backSprite;
 if (static_timer == 0) {
 	if (currentCamera.location == locations.HallwayLeftA) && !((animatronics.Foxy.foxyStage == 3) && (foxyAnimateRun < sprite_get_number(spr_foxy_run)-1) && (visitedFoxyRun)) {
-		_backSprite = choose(_backSprite, spr_hallway_leftALightOff);
+		_backSprite = (game_settings.lightFlicker) ? choose(_backSprite, spr_hallway_leftALightOff) : _backSprite;
 	}
 	draw_sprite_ext(_backSprite, _backIndex, 0, 0, 1, 1, 0, c_white, alpha);
 }

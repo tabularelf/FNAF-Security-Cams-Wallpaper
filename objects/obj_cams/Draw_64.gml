@@ -21,10 +21,10 @@ if (randomHallucinations) && !(paused) {
 }
 
 // Render static
-draw_sprite_ext(spr_static,	current_time*image_speed_get(spr_static), 0, 0, 1, 1, 0, c_white, min(.15, alpha));
+draw_sprite_ext(spr_static,	current_time*image_speed_get(spr_static), 0, 0, 1, 1, 0, c_white, min(game_settings.staticAlpha, alpha));
 
 if (cameraChange) {
-	draw_sprite(spr_vhs_change,	cameraChangeIndex,0, 0);	
+	draw_sprite_ext(spr_vhs_change,	cameraChangeIndex,0, 0, 1, 1, 0, c_white, game_settings.flashAlpha);	
 }
 	
 // Render UI
