@@ -191,6 +191,28 @@ if (static_timer == 0) {
 		}
 	}
 	
+	/*
+	if (os_browser != browser_not_a_browser) {
+		if (global.width != browser_width) || (global.height != browser_height) {
+			surface_resize(application_surface,browser_width, browser_height);
+			window_set_size(browser_width, browser_height);
+			rescaleCanvas();
+			
+			global.width = browser_width;
+			global.height = browser_height;
+		}
+	} else {
+		if (global.width != display_get_width() || global.height != display_get_height()) {
+			var _dW = display_get_width();
+			var _dH = display_get_height();
+			surface_resize(application_surface,_dW, _dH);
+			window_set_size(_dW, _dH);
+			global.width = _dW;
+			global.height = _dH;	
+		}
+	}
+	*/
+	
 	if (global.width != browser_width) || (global.height != browser_height) {
 		surface_resize(application_surface,browser_width, browser_height);
 		window_set_size(browser_width, browser_height);
