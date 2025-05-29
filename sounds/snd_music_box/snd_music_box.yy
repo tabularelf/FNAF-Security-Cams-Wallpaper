@@ -1,26 +1,28 @@
 {
-  "conversionMode": 0,
-  "compression": 3,
-  "volume": 1.0,
-  "preload": false,
-  "bitRate": 128,
-  "sampleRate": 44100,
-  "type": 0,
-  "bitDepth": 1,
-  "audioGroupId": {
-    "name": "audiogroup_default",
-    "path": "audiogroups/audiogroup_default",
+  "$GMSound":"",
+  "%Name":"snd_music_box",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
   },
-  "soundFile": "snd_music_box.wav",
-  "duration": 61.6396828,
-  "parent": {
-    "name": "Ambient",
-    "path": "folders/Sounds/Ambient.yy",
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":2,
+  "conversionMode":0,
+  "duration":61.639683,
+  "name":"snd_music_box",
+  "parent":{
+    "name":"Ambient",
+    "path":"folders/Sounds/Ambient.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "snd_music_box",
-  "tags": [
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_music_box.wav",
+  "tags":[
     "Ambient",
   ],
-  "resourceType": "GMSound",
+  "type":0,
+  "volume":1.0,
 }

@@ -1,26 +1,28 @@
 {
-  "conversionMode": 0,
-  "compression": 3,
-  "volume": 1.0,
-  "preload": false,
-  "bitRate": 128,
-  "sampleRate": 44100,
-  "type": 0,
-  "bitDepth": 1,
-  "audioGroupId": {
-    "name": "audiogroup_default",
-    "path": "audiogroups/audiogroup_default",
+  "$GMSound":"",
+  "%Name":"snd_circius",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
   },
-  "soundFile": "snd_circius.wav",
-  "duration": 22.1014519,
-  "parent": {
-    "name": "Ambient",
-    "path": "folders/Sounds/Ambient.yy",
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":2,
+  "conversionMode":0,
+  "duration":22.101452,
+  "name":"snd_circius",
+  "parent":{
+    "name":"Ambient",
+    "path":"folders/Sounds/Ambient.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "snd_circius",
-  "tags": [
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_circius.wav",
+  "tags":[
     "Ambient",
   ],
-  "resourceType": "GMSound",
+  "type":0,
+  "volume":1.0,
 }

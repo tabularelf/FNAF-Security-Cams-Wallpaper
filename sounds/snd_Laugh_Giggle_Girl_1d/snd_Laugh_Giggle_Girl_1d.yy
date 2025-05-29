@@ -1,26 +1,28 @@
 {
-  "conversionMode": 0,
-  "compression": 1,
-  "volume": 1.0,
-  "preload": false,
-  "bitRate": 128,
-  "sampleRate": 44100,
-  "type": 0,
-  "bitDepth": 1,
-  "audioGroupId": {
-    "name": "audiogroup_default",
-    "path": "audiogroups/audiogroup_default",
+  "$GMSound":"",
+  "%Name":"snd_Laugh_Giggle_Girl_1d",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
   },
-  "soundFile": "snd_Laugh_Giggle_Girl_1d.wav",
-  "duration": 5.527211,
-  "parent": {
-    "name": "Animatronic",
-    "path": "folders/Sounds/Animatronic.yy",
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":1,
+  "conversionMode":0,
+  "duration":5.527211,
+  "name":"snd_Laugh_Giggle_Girl_1d",
+  "parent":{
+    "name":"Animatronic",
+    "path":"folders/Sounds/Animatronic.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "snd_Laugh_Giggle_Girl_1d",
-  "tags": [
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_Laugh_Giggle_Girl_1d.wav",
+  "tags":[
     "Animatronic",
   ],
-  "resourceType": "GMSound",
+  "type":0,
+  "volume":1.0,
 }

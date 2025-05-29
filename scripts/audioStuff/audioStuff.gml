@@ -1,5 +1,6 @@
 function audioSwitchPirate() {
-	switch(currentCamera.location) {
+	var game_settings = global.game_settings;
+	switch(obj_cams.currentCamera.location) {
 		case locations.PirateCove:
 			audio_sound_gain(snd_pirate_song,.6*game_settings.volume_animatronics,0);	
 		break;

@@ -43,6 +43,8 @@ if (os_browser != browser_not_a_browser) {
 	} else {
 		_bat = _bat * 100;	
 	}
+} else {
+	_bat = batteryPercent;
 }
 
 //_bat = (_bat mod 101);

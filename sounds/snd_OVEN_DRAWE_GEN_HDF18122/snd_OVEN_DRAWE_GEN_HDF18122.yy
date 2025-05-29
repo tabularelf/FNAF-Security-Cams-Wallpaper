@@ -1,26 +1,28 @@
 {
-  "conversionMode": 0,
-  "compression": 1,
-  "volume": 1.0,
-  "preload": false,
-  "bitRate": 128,
-  "sampleRate": 44100,
-  "type": 0,
-  "bitDepth": 1,
-  "audioGroupId": {
-    "name": "audiogroup_default",
-    "path": "audiogroups/audiogroup_default",
+  "$GMSound":"",
+  "%Name":"snd_OVEN_DRAWE_GEN_HDF18122",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
   },
-  "soundFile": "snd_OVEN_DRAWE_GEN_HDF18122.wav",
-  "duration": 5.250703,
-  "parent": {
-    "name": "Animatronic",
-    "path": "folders/Sounds/Animatronic.yy",
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":1,
+  "conversionMode":0,
+  "duration":5.250703,
+  "name":"snd_OVEN_DRAWE_GEN_HDF18122",
+  "parent":{
+    "name":"Animatronic",
+    "path":"folders/Sounds/Animatronic.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "snd_OVEN_DRAWE_GEN_HDF18122",
-  "tags": [
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_OVEN_DRAWE_GEN_HDF18122.wav",
+  "tags":[
     "Animatronic",
   ],
-  "resourceType": "GMSound",
+  "type":0,
+  "volume":1.0,
 }

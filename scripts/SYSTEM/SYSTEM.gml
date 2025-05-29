@@ -1,6 +1,4 @@
-if (os_browser != browser_not_a_browser) {
-	gml_pragma("PNGCrush");
-}
+//gml_pragma("PNGCrush");
 
 global.hasStarted = false;
 
@@ -12,8 +10,40 @@ function image_speed_get(_sprite) {
 
 #macro WALLPAPER_VERSION 7
 
+function __init_settings() {	
+	static isInit = false;
+	if (isInit) return global.game_settings;
+	isInit = true;
+		global.game_settings = {};
+			global.chimeSound = -1;
+
+			global.currentAudio = {
+					foxyRunning: -1,
+					freddyLaugh: -1,
+					blipClick: -1,
+					buzzFan: -1,
+					VCRSFX: -1,
+					normalRunningLeft: -1,
+					normalRunningRight: -1,
+					cameraChange: -1,
+					pirateSong: -1,
+					kitchenSong: -1,
+					kitchenPans: -1,
+					knocking: -1,
+					eerieAmbience: -1,
+					hallucinations: -1,
+					garbled: -1,
+			};
+		init_game_settings();
+		update_game_settings(true, "STAGE", .5, .5, .5);
+}
+__init_settings();
+
 function init_game_settings() {
-	var _game_settings = obj_cams.game_settings;
+	static isInit = false;
+	if (isInit) return;
+	isInit = true;
+	var _game_settings = global.game_settings;
 	_game_settings.version = WALLPAPER_VERSION;
 	_game_settings.freddyAI = 0;
 	_game_settings.foxyAI = 0;
@@ -29,9 +59,10 @@ function init_game_settings() {
 }
 
 function update_game_settings(_volume_enabled, _last_location, _volume_ambient, _volume_animatronics, _volume_ui) {
-	var _v1 = is_undefined(_volume_ambient)		?  obj_cams.game_settings.volume_ambient : _volume_ambient;
-	var _v2 = is_undefined(_volume_animatronics)	?  obj_cams.game_settings.volume_animatronics : _volume_animatronics;
-	var _v3 = is_undefined(_volume_ui)			?  obj_cams.game_settings.volume_ui : _volume_ui;
+	//init_game_settings();
+	var _v1 = is_undefined(_volume_ambient)		?  global.game_settings.volume_ambient : _volume_ambient;
+	var _v2 = is_undefined(_volume_animatronics)	?  global.game_settings.volume_animatronics : _volume_animatronics;
+	var _v3 = is_undefined(_volume_ui)			?  global.game_settings.volume_ui : _volume_ui;
 	/*var _struct = {
 		version:				WALLPAPER_VERSION,
 		volume_enabled:			_volume_enabled,
@@ -43,73 +74,69 @@ function update_game_settings(_volume_enabled, _last_location, _volume_ambient, 
 	
 	show_debug_message("Does this work 2?");
 	
-	obj_cams.game_settings = _struct;
+	.game_settings = _struct;
 	return false;*/
-	
-	obj_cams.game_settings.version = WALLPAPER_VERSION;
-	obj_cams.game_settings.last_location = _last_location;
-	obj_cams.game_settings.volume_enabled = _volume_enabled;
-	obj_cams.game_settings.volume_ambient = _v1;
-	obj_cams.game_settings.volume_animatronics = _v2;
-	obj_cams.game_settings.volume_ui = _v3;
-	show_debug_message(obj_cams.game_settings);
-	with(obj_cams) {
-		if (global.hasStarted) {
-			audioSwitchKitchen();
-			audioSwitchPirate();
-		}
+	global.game_settings.version = WALLPAPER_VERSION;
+	global.game_settings.last_location = _last_location;
+	global.game_settings.volume_enabled = _volume_enabled == undefined ? global.game_settings.volume_enabled : _volume_enabled;
+	global.game_settings.volume_ambient = _v1;
+	global.game_settings.volume_animatronics = _v2;
+	global.game_settings.volume_ui = _v3;
+	if (global.hasStarted) {
+		audioSwitchKitchen();
+		audioSwitchPirate();
 	}
 	
 	var _currentAudio = global.currentAudio;
 	if (audio_is_playing(_currentAudio.foxyRunning)) {
-		audio_sound_gain(_currentAudio.foxyRunning,.6* obj_cams.game_settings.volume_animatronics, 0);	
+		audio_sound_gain(_currentAudio.foxyRunning,.6* global.game_settings.volume_animatronics, 0);	
 	}
 	
 	if (audio_is_playing(_currentAudio.freddyLaugh)) {
-		audio_sound_gain(_currentAudio.freddyLaugh, obj_cams.game_settings.volume_animatronics, 0);	
+		audio_sound_gain(_currentAudio.freddyLaugh, global.game_settings.volume_animatronics, 0);	
 	}
 	
 	if (audio_is_playing(_currentAudio.knocking)) {
-		audio_sound_gain(_currentAudio.knocking, obj_cams.game_settings.volume_animatronics, 0);	
+		audio_sound_gain(_currentAudio.knocking, global.game_settings.volume_animatronics, 0);	
 	}
 	
 	if (audio_is_playing(_currentAudio.blipClick)) {
-		audio_sound_gain(_currentAudio.blipClick, obj_cams.game_settings.volume_ui, 0);	
+		audio_sound_gain(_currentAudio.blipClick, global.game_settings.volume_ui, 0);	
 	}
 	
 	if (audio_is_playing(_currentAudio.buzzFan)) {
-		audio_sound_gain(_currentAudio.buzzFan, .3*obj_cams.game_settings.volume_ambient, 0);	
+		audio_sound_gain(_currentAudio.buzzFan, .3*global.game_settings.volume_ambient, 0);	
 	}
 	
 	if (audio_is_playing(_currentAudio.VCRSFX)) {
-		audio_sound_gain(_currentAudio.VCRSFX, obj_cams.game_settings.volume_ambient, 0);	
+		audio_sound_gain(_currentAudio.VCRSFX, global.game_settings.volume_ambient, 0);	
 	}
 	
 	if (audio_is_playing(_currentAudio.eerieAmbience)) {
-		audio_sound_gain(_currentAudio.eerieAmbience, obj_cams.game_settings.volume_ambient, 0);
+		audio_sound_gain(_currentAudio.eerieAmbience, global.game_settings.volume_ambient, 0);
 	}
 	
 	if (audio_is_playing(_currentAudio.hallucinations)) {
-		audio_sound_gain(_currentAudio.hallucinations, obj_cams.game_settings.volume_animatronics, 0);
+		audio_sound_gain(_currentAudio.hallucinations, global.game_settings.volume_animatronics, 0);
 	}
 	
 	if (audio_is_playing(_currentAudio.normalRunningLeft)) {
-		audio_sound_gain(_currentAudio.normalRunningLeft, .5*obj_cams.game_settings.volume_animatronics, 0);	
+		audio_sound_gain(_currentAudio.normalRunningLeft, .5*global.game_settings.volume_animatronics, 0);	
 	}
 	
 	if (audio_is_playing(_currentAudio.normalRunningRight)) {
-		audio_sound_gain(_currentAudio.normalRunningRight, .5*obj_cams.game_settings.volume_animatronics, 0);	
+		audio_sound_gain(_currentAudio.normalRunningRight, .5*global.game_settings.volume_animatronics, 0);	
 	}
 	
 	if (audio_is_playing(_currentAudio.cameraChange)) {
-		audio_sound_gain(_currentAudio.cameraChange,  .6*obj_cams.game_settings.volume_ui, 0);	
+		audio_sound_gain(_currentAudio.cameraChange,  .6*global.game_settings.volume_ui, 0);	
 	}
 }
 
 
 function save_settings() {
 		var _buff = buffer_create(1, buffer_grow,1);
-		buffer_write(_buff,buffer_string,json_stringify(obj_cams.game_settings));
+		buffer_write(_buff,buffer_string,json_stringify(global.game_settings));
 		buffer_save(_buff,"settings.txt");
 		show_debug_message("Settings saved!");
 		buffer_delete(_buff);

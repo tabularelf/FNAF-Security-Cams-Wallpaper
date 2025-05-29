@@ -4,16 +4,16 @@ function gmcallback_wallpaperEngineUpdateProperties() {
 	var game_settings = obj_cams.game_settings;
 	switch(_keyName) {
 		case "fnafmuteaudio": 
-			show_debug_message("Audio Mute Stuff");
+			//show_debug_message("Audio Mute Stuff");
 			audio_set_master_gain(0, !_value);	
 			update_game_settings(!_value, game_settings.last_location);
 			save_settings();
 		break;
 		
 		case "fnafambience":
-			show_debug_message("Ambience Stuff");
+			//show_debug_message("Ambience Stuff");
 			update_game_settings(game_settings.volume_enabled, game_settings.last_location, _value, undefined, undefined);
-			show_debug_message(obj_cams.game_settings);
+			//show_debug_message(obj_cams.game_settings);
 			/*var _array = tag_get_asset_ids("Ambient", asset_sound);
 			for(var _i = 0; _i < array_length(_array); ++_i) {
 				if (audio_is_playing(_i)) {
@@ -25,7 +25,7 @@ function gmcallback_wallpaperEngineUpdateProperties() {
 		break;
 		
 		case "fnafui":
-			show_debug_message("UI Stuff");
+			//show_debug_message("UI Stuff");
 			update_game_settings(game_settings.volume_enabled, game_settings.last_location, undefined, undefined, _value);
 			//var _array = tag_get_asset_ids("UI", asset_sound);
 			/*for(var _i = 0; _i < array_length(_array); ++_i) {
@@ -38,7 +38,7 @@ function gmcallback_wallpaperEngineUpdateProperties() {
 		break;
 		
 		case "fnafanimatronics":
-			show_debug_message("Animatronic Stuff");
+			//show_debug_message("Animatronic Stuff");
 			update_game_settings(game_settings.volume_enabled, game_settings.last_location, undefined, _value, undefined);
 			//var _array = tag_get_asset_ids("Animatronic", asset_sound);
 			/*for(var _i = 0; _i < array_length(_array); ++_i) {

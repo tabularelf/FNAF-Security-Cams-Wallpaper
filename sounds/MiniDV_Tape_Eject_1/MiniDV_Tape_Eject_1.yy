@@ -1,26 +1,28 @@
 {
-  "conversionMode": 0,
-  "compression": 1,
-  "volume": 1.0,
-  "preload": false,
-  "bitRate": 128,
-  "sampleRate": 44100,
-  "type": 0,
-  "bitDepth": 1,
-  "audioGroupId": {
-    "name": "audiogroup_default",
-    "path": "audiogroups/audiogroup_default",
+  "$GMSound":"",
+  "%Name":"MiniDV_Tape_Eject_1",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
   },
-  "soundFile": "MiniDV_Tape_Eject_1.wav",
-  "duration": 16.6293411,
-  "parent": {
-    "name": "UI",
-    "path": "folders/Sounds/UI.yy",
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":1,
+  "conversionMode":0,
+  "duration":16.629341,
+  "name":"MiniDV_Tape_Eject_1",
+  "parent":{
+    "name":"UI",
+    "path":"folders/Sounds/UI.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "MiniDV_Tape_Eject_1",
-  "tags": [
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"MiniDV_Tape_Eject_1.wav",
+  "tags":[
     "UI",
   ],
-  "resourceType": "GMSound",
+  "type":0,
+  "volume":1.0,
 }

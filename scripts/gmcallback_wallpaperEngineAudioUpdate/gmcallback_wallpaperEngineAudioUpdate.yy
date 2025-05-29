@@ -1,12 +1,13 @@
 {
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "FNAF_Security_Cams",
-    "path": "FNAF_Security_Cams.yyp",
+  "$GMScript":"v1",
+  "%Name":"gmcallback_wallpaperEngineAudioUpdate",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"gmcallback_wallpaperEngineAudioUpdate",
+  "parent":{
+    "name":"FNAF_Security_Cams",
+    "path":"FNAF_Security_Cams.yyp",
   },
-  "resourceVersion": "1.0",
-  "name": "gmcallback_wallpaperEngineAudioUpdate",
-  "tags": [],
-  "resourceType": "GMScript",
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

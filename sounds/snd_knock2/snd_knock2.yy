@@ -1,26 +1,28 @@
 {
-  "conversionMode": 0,
-  "compression": 1,
-  "volume": 1.0,
-  "preload": false,
-  "bitRate": 128,
-  "sampleRate": 44100,
-  "type": 0,
-  "bitDepth": 1,
-  "audioGroupId": {
-    "name": "audiogroup_default",
-    "path": "audiogroups/audiogroup_default",
+  "$GMSound":"",
+  "%Name":"snd_knock2",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
   },
-  "soundFile": "snd_knock2.wav",
-  "duration": 3.324535,
-  "parent": {
-    "name": "Animatronic",
-    "path": "folders/Sounds/Animatronic.yy",
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":1,
+  "conversionMode":0,
+  "duration":3.324535,
+  "name":"snd_knock2",
+  "parent":{
+    "name":"Animatronic",
+    "path":"folders/Sounds/Animatronic.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "snd_knock2",
-  "tags": [
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_knock2.wav",
+  "tags":[
     "Animatronic",
   ],
-  "resourceType": "GMSound",
+  "type":0,
+  "volume":1.0,
 }

@@ -1,26 +1,28 @@
 {
-  "conversionMode": 0,
-  "compression": 1,
-  "volume": 1.0,
-  "preload": false,
-  "bitRate": 128,
-  "sampleRate": 44100,
-  "type": 0,
-  "bitDepth": 1,
-  "audioGroupId": {
-    "name": "audiogroup_default",
-    "path": "audiogroups/audiogroup_default",
+  "$GMSound":"",
+  "%Name":"snd_running_fast3",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
   },
-  "soundFile": "snd_running_fast3.wav",
-  "duration": 2.230884,
-  "parent": {
-    "name": "Animatronic",
-    "path": "folders/Sounds/Animatronic.yy",
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":1,
+  "conversionMode":0,
+  "duration":2.230884,
+  "name":"snd_running_fast3",
+  "parent":{
+    "name":"Animatronic",
+    "path":"folders/Sounds/Animatronic.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "snd_running_fast3",
-  "tags": [
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_running_fast3.wav",
+  "tags":[
     "Animatronic",
   ],
-  "resourceType": "GMSound",
+  "type":0,
+  "volume":1.0,
 }

@@ -1,8 +1,3 @@
-// this is the default code that you get when you reate a blank sahder. 
-// nothing changed here.
-
-
-
 //
 // Simple passthrough vertex shader
 //

@@ -7,7 +7,7 @@ Cat Judges your code
 */
 
 #macro cameraShuffleTime 60*15
-
+textureLowRes = false;
 global.width = 1;
 global.height = 1;
 numFontTime = font_add_sprite_ext(spr_fontNumbersTime, "0123456789", true, 2);
@@ -17,29 +17,13 @@ date_set_timezone(timezone_local);
 creditsAlpha = 1;
 alarm[2] = 60*8;
 cameraShuffleTimer = cameraShuffleTime;
+sprite_prefetch_multi(asset_get_ids(asset_sprite));
+//sprite_prefetch(spr_cam_show_stage);
+//sprite_prefetch(spr_vhs_change);
 
 paused = false;
 alpha = 1;
 textUp = 0;
-global.chimeSound = -1;
-
-global.currentAudio = {
-		foxyRunning: -1,
-		freddyLaugh: -1,
-		blipClick: -1,
-		buzzFan: -1,
-		VCRSFX: -1,
-		normalRunningLeft: -1,
-		normalRunningRight: -1,
-		cameraChange: -1,
-		pirateSong: -1,
-		kitchenSong: -1,
-		kitchenPans: -1,
-		knocking: -1,
-		eerieAmbience: -1,
-		hallucinations: -1,
-		garbled: -1,
-};
 
 randomize();
 function moveAnimatronic(_animatronic) {
@@ -275,7 +259,7 @@ function moveAnimatronic(_animatronic) {
 							break;
 						}
 						
-						show_debug_message(_canPlay);
+						//show_debug_message(_canPlay);
 						if (_canPlay == true) {
 							if audio_sound_is_playable(_laugh) {
 								var _index = audio_play_sound(_laugh, 0, false);
@@ -370,9 +354,7 @@ for(var _i = 0; _i < sprite_get_number(spr_foxy_run); ++_i) {
 	_foxyFrames[1][_i] = _i;	
 }*/
 
-game_settings = {};
-init_game_settings();
-update_game_settings(true, "STAGE", .5, .5, .5);
+game_settings = global.game_settings;
 
 if (file_exists("settings.txt")) {
 	var _buff = buffer_load("settings.txt");
@@ -453,3 +435,169 @@ randomHallucinationsNum = 0;
 randomHallucinationsNumTimer = 5;
 randomHallucinations = 0;
 global.animatronicsHaveMoved = false;
+
+global.currentAudio = {
+	foxyRunning: -1,
+	freddyLaugh: -1,
+	blipClick: -1,
+	buzzFan: -1,
+	VCRSFX: -1,
+	normalRunningLeft: -1,
+	normalRunningRight: -1,
+	cameraChange: -1,
+	pirateSong: -1,
+	kitchenSong: -1,
+	kitchenPans: -1,
+	knocking: -1,
+	eerieAmbience: -1,
+	hallucinations: -1,
+	garbled: -1,
+};
+
+//var _names = LivelyGetNames();
+//var _i = 0;
+//repeat(array_length(_names)) {
+//	livelyUpdateProperties(_names[_i], LivelyGetValue(_names[_i]));
+//	++_i;
+//}
+//LivelySetup();
+
+var _config_lw_subs = [
+    "battery",
+    "desktop_mouse"
+];
+//audio_master_gain(0);
+lw_subs_data = undefined;
+global.config = [
+	{
+	    type: "section",
+	    name: "audio",
+	    label: "Audio",
+	    children: [{
+			type: "boolean",
+			name: "mute_audio",
+			label: "Mute Audio",
+			value: false
+		},
+		{
+			type: "range",
+			name: "animatronic_audio",
+			label: "Animatronic Sounds",
+			min: 0,
+			max: 1,
+			step: 0.1,
+			value: 0.5,
+		},
+		{
+			type: "range",
+			name: "ambience_audio",
+			label: "Ambience Sounds",
+			min: 0,
+			max: 1,
+			step: 0.1,
+			value: 0.5,
+		},
+		{
+			type: "range",
+			name: "ui_audio",
+			label: "UI Sounds",
+			min: 0,
+			max: 1,
+			step: 0.1,
+			value: 0.5,
+		}]
+	},
+	{
+	    type: "section",
+	    name: "general",
+	    label: "General",
+	    children: [{
+			type: "boolean",
+			name: "garble",
+			label: "Garble Camera",
+			value: true
+		},
+		{
+			type: "boolean",
+			name: "is_sunday",
+			label: "Sunday first day of the week",
+			value: true
+		},
+		{
+			type: "boolean",
+			name: "camera_auto_shuffle",
+			label: "Camera Automatic Shuffle",
+			value: true
+		},
+		{
+			type: "boolean",
+			name: "hallway_west_a_light_flicker",
+			label: "Hallway West A Light Flicker",
+			value: true
+		},
+		{
+			type: "range",
+			name: "camera_flash_alpha",
+			label: "Camera Change Flash Alpha",
+			min: 0,
+			max: 1,
+			step: 0.1,
+			value: 1,
+		},
+		{
+			type: "range",
+			name: "camera_static_alpha",
+			label: "Camera Static Alpha",
+			min: 0,
+			max: 1,
+			step: 0.01,
+			value: 0.15,
+		}]
+	},
+	{
+		type: "section",
+	    name: "animatronics",
+	    label: "Animatronics",
+	    children: [{
+			type: "range",
+			name: "freddy_ai",
+			label: "Freddy AI",
+			min: 0,
+			max: 10,
+			step: 1,
+			value: 0,
+		},
+		{
+			type: "range",
+			name: "foxy_ai",
+			label: "Foxy AI",
+			min: 0,
+			max: 10,
+			step: 1,
+			value: 0,
+		},
+		{
+			type: "range",
+			name: "chica_ai",
+			label: "Chica AI",
+			min: 0,
+			max: 10,
+			step: 1,
+			value: 0,
+		},
+		{
+			type: "range",
+			name: "bonnie_ai",
+			label: "Bonnie AI",
+			min: 0,
+			max: 10,
+			step: 1,
+			value: 0,
+		}]
+	}
+];
+
+batteryPercent = 100;
+
+wallpaper_set_subscriptions(_config_lw_subs);
+wallpaper_set_config(global.config);

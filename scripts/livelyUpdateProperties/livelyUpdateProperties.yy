@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"livelyUpdateProperties",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"livelyUpdateProperties",
+  "parent":{
+    "name":"FNAF_Security_Cams",
+    "path":"FNAF_Security_Cams.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,26 +1,28 @@
 {
-  "conversionMode": 0,
-  "compression": 3,
-  "volume": 1.0,
-  "preload": false,
-  "bitRate": 128,
-  "sampleRate": 44100,
-  "type": 0,
-  "bitDepth": 1,
-  "audioGroupId": {
-    "name": "audiogroup_default",
-    "path": "audiogroups/audiogroup_default",
+  "$GMSound":"",
+  "%Name":"snd_pirate_song",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
   },
-  "soundFile": "snd_pirate_song.wav",
-  "duration": 9.659501,
-  "parent": {
-    "name": "Ambient",
-    "path": "folders/Sounds/Ambient.yy",
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":2,
+  "conversionMode":0,
+  "duration":9.659501,
+  "name":"snd_pirate_song",
+  "parent":{
+    "name":"Ambient",
+    "path":"folders/Sounds/Ambient.yy",
   },
-  "resourceVersion": "1.0",
-  "name": "snd_pirate_song",
-  "tags": [
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_pirate_song.wav",
+  "tags":[
     "Ambient",
   ],
-  "resourceType": "GMSound",
+  "type":0,
+  "volume":1.0,
 }
